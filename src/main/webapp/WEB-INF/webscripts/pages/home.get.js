@@ -123,7 +123,7 @@ model.jsonModel = {
                                                 publishPayload: {
                                                    url: "ap/ws/document/{node.nodeRef}",
                                                    type: "SHARE_PAGE_RELATIVE",
-                                                   target: "CURRENT"
+                                                   target: "NEW"
                                                 },
                                                 renderFilter: [
                                                   {
