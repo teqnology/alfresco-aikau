@@ -51,7 +51,7 @@
    </dependencies>
    
    <build>
-      <finalName>aikau-sample</finalName>
+      <finalName>alfresco-aikau</finalName>
       
 
       <plugins>
@@ -61,7 +61,7 @@
             <version>2.2</version>
             <configuration>
                <port>8090</port>
-               <path>/aikau-sample</path>
+               <path>/alfresco-aikau</path>
                <warSourceDirectory>${project.basedir}/src/main/webapp</warSourceDirectory>
             </configuration>
          </plugin>
@@ -82,7 +82,7 @@
 
                <webApp>
                   <descriptor>src/main/webapp/WEB-INF/web.xml</descriptor>
-                  <contextPath>/aikau-sample</contextPath>
+                  <contextPath>/alfresco-aikau</contextPath>
                   <resourceBases>
                      <resourceBase>src/main/webapp</resourceBase>
                   </resourceBases>

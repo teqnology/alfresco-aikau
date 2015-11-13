@@ -109,6 +109,7 @@
                <messages-object>Alfresco</messages-object>
                <packages>
                    <!-- Add custom packages here -->
+                   <package name="tutorial" location="js/tutorial"/>
                </packages>
             </dojo-pages>
         </web-framework>
