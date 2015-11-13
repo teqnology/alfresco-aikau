@@ -21,8 +21,37 @@ model.jsonModel = {
         "alfresco/services/OptionsService"
     ],
     widgets: [{
+        name: "alfresco/header/Warning",
+        config: {
+            renderFilterMethod: "ALL",
+            renderFilter: [
+               {
+                  target: "groupMemberships",
+                  property: "GROUP_ALFRESCO_ADMINISTRATORS",
+                  renderOnAbsentProperty: true,
+                  values: [false]
+               }
+            ],
+            warnings: [
+               {
+                  message: "You must be a member of the Administrators Group to view this page",
+                  level: 3
+               }
+            ]
+        }
+        },
+        {
         name: "alfresco/layout/HorizontalWidgets",
         config: {
+            renderFilterMethod: "ALL",
+            renderFilter: [
+               {
+                  target: "groupMemberships",
+                  property: "GROUP_ALFRESCO_ADMINISTRATORS",
+                  renderOnAbsentProperty: false,
+                  values: [true]
+               }
+            ],
             widgetMarginLeft: "10",
             widgetMarginRight: "10",
             widgets: [{
@@ -637,3 +666,5 @@ model.jsonModel = {
         }
     }]
 };
+
+model.jsonModel.groupMemberships = user.properties["alfUserGroups"];
