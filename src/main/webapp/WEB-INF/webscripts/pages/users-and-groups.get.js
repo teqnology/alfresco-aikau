@@ -466,7 +466,8 @@ model.jsonModel = {
                                                             pubSubScope: "USERS_"
                                                         },
                                                         fixedWidth: true,
-                                                        widgets: [{
+                                                        widgets: [
+                                                        {
                                                             name: "alfresco/forms/controls/TextBox",
                                                             config: {
                                                                 fieldId: "USERNAME",
@@ -474,53 +475,166 @@ model.jsonModel = {
                                                                 name: "userName",
                                                                 requirementConfig: {
                                                                     initialValue: true
-                                                                }
-                                                            }
-                                                        }, {
-                                                            name: "alfresco/forms/controls/TextBox",
-                                                            config: {
-                                                                fieldId: "FIRSTNAME",
-                                                                label: "First Name",
-                                                                name: "firstName",
-                                                                requirementConfig: {
-                                                                    initialValue: true
-                                                                }
-                                                            }
-                                                        }, {
-                                                            name: "alfresco/forms/controls/TextBox",
-                                                            config: {
-                                                                fieldId: "LASTNAME",
-                                                                label: "Last Name",
-                                                                name: "lastName",
-                                                                requirementConfig: {
-                                                                    initialValue: true
-                                                                }
-                                                            }
-                                                        }, {
-                                                            name: "alfresco/forms/controls/TextBox",
-                                                            config: {
-                                                                fieldId: "EMAIL",
-                                                                label: "Email",
-                                                                name: "email",
-                                                                requirementConfig: {
-                                                                    initialValue: true
                                                                 },
                                                                 validationConfig: [
-                                                                  {
-                                                                    validation: "regex",
-                                                                    regex: "^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,9})$",
-                                                                    errorMessage: "Valid E-mail Address Required"
+                                                                {
+                                                                 validation: "validateUnique",
+                                                                 itemsProperty: "response.people",
+                                                                 errorMessage: "This username is already in use",
+                                                                 publishTopic: "ALF_CRUD_GET_ALL",
+                                                                 publishPayload: {
+                                                                    url: "api/people?filter="
+                                                                 }
+                                                                }
+                                                               ]
+                                                            }
+                                                        },
+                                                        {
+                                                           name: "alfresco/forms/ControlRow",
+                                                           config: {
+                                                              title: "User Details",
+                                                              description: "Essential user information.",
+                                                              widgets: [
+                                                              {
+                                                                  name: "alfresco/forms/controls/TextBox",
+                                                                  config: {
+                                                                      fieldId: "FIRSTNAME",
+                                                                      label: "First Name",
+                                                                      name: "firstName",
+                                                                      requirementConfig: {
+                                                                          initialValue: true
+                                                                      }
                                                                   }
-                                                                ]
+                                                              },{
+                                                                  name: "alfresco/forms/controls/TextBox",
+                                                                  config: {
+                                                                      fieldId: "LASTNAME",
+                                                                      label: "Last Name",
+                                                                      name: "lastName",
+                                                                      requirementConfig: {
+                                                                          initialValue: true
+                                                                      }
+                                                                  }
+                                                                },
+                                                                {
+                                                                name: "alfresco/forms/controls/TextBox",
+                                                                config: {
+                                                                    fieldId: "EMAIL",
+                                                                    label: "Email",
+                                                                    name: "email",
+                                                                    requirementConfig: {
+                                                                        initialValue: true
+                                                                    },
+                                                                    validationConfig: [
+                                                                      {
+                                                                        validation: "regex",
+                                                                        regex: "^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,9})$",
+                                                                        errorMessage: "Valid E-mail Address Required"
+                                                                      }
+                                                                    ]
+                                                                }
+                                                            }]
+                                                           }
+                                                        },
+                                                        {
+                                                           name: "alfresco/forms/ControlRow",
+                                                           config: {
+                                                              title: "Security",
+                                                              description: "Authentication related data.",
+                                                              widgets: [
+                                                              {
+                                                                  name: "alfresco/forms/controls/Password",
+                                                                  config: {
+                                                                      fieldId: "PASSWORD",
+                                                                      label: "Password",
+                                                                      name: "password",
+                                                                      validationConfig: [
+                                                                      {
+                                                                          validation: "minLength",
+                                                                          errorMessage: "Passwords must be at least 8 characters long",
+                                                                          length: 8
+                                                                      },{
+                                                                          validation: "regex",
+                                                                          regex: "([\"*\\><?/:|]+)|([.]?[.]+$)",
+                                                                          errorMessage: "Passwords cannot contain any of the following characters: \" * \\ < > ? / : | %",
+                                                                          invertRule: true
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                              },{
+                                                                  name: "alfresco/forms/controls/Password",
+                                                                  config: {
+                                                                     fieldId: "CONFIRM_PASSWORD",
+                                                                     label: "Confirm Password",
+                                                                     description: "Re-enter the password to ensure the correct value was provided",
+                                                                     name: "confirmPassword",
+                                                                     validationConfig: [
+                                                                        {
+                                                                           validation: "validateMatch",
+                                                                           errorMessage: "The passwords do not match",
+                                                                           targetId: "PASSWORD"
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               }
+                                                              ]
+                                                          }
+                                                        },{
+                                                             name: "alfresco/forms/controls/CheckBox",
+                                                             config: {
+                                                                fieldId: "SHOW_OTHER_FIELDS",
+                                                                label: "Add extra user information?",
+                                                                description: "Check this box to provide additional information about the user",
+                                                                name: "extra_info",
+                                                                value: false
+                                                             }
+                                                          },{
+                                                              name: "alfresco/forms/controls/TextBox",
+                                                              config: {
+                                                                 fieldId: "JOBTITLE",
+                                                                 label: "Job Title",
+                                                                 description: "What does this user do?",
+                                                                 name: "jobtitle",
+                                                                 visibilityConfig: {
+                                                                    initialValue: false,
+                                                                    rules: [
+                                                                       {
+                                                                          targetId: "SHOW_OTHER_FIELDS",
+                                                                          is: [true]
+                                                                          //alternatively isNot: [false] can be used
+                                                                       }
+                                                                    ]
+                                                                 }
+                                                              }
+                                                           },
+                                                            {
+                                                               name: "alfresco/forms/controls/MultipleEntryFormControl",
+                                                               config: {
+                                                                  fieldId: "GROUPS",
+                                                                  name: "groups",
+                                                                  label: "Add to Groups",
+                                                                  useSimpleValues: true,
+                                                                  widgets: [
+                                                                     {
+                                                                        name: "alfresco/forms/controls/Select",
+                                                                        config: {
+                                                                           name: "value",
+                                                                           label: "Select group",
+                                                                           optionsConfig: {
+                                                                              publishTopic: "ALF_GET_FORM_CONTROL_OPTIONS",
+                                                                              publishPayload: {
+                                                                                 url: url.context + "/proxy/alfresco/api/groups?zone=APP.DEFAULT",
+                                                                                 itemsAttribute: "data",
+                                                                                 labelAttribute: "displayName",
+                                                                                 valueAttribute: "fullName"
+                                                                              }
+                                                                           }
+                                                                        }
+                                                                     }
+                                                                  ]
+                                                               }
                                                             }
-                                                        }, {
-                                                            name: "alfresco/forms/controls/Password",
-                                                            config: {
-                                                                fieldId: "PASSWORD",
-                                                                label: "Password",
-                                                                name: "password"
-                                                            }
-                                                        }]
+                                                           ]
                                                     }
                                                 }
                                             }]
