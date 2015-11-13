@@ -63,34 +63,6 @@ model.jsonModel = {
                   }
                },
                {
-                 name: "tutorial/HelloWorld"
-               },
-               {
-                 name: "tutorial/Label"
-               },
-               {
-                 name: "tutorial/Label",
-                 config: {
-                   label: "Good Morning",
-                   additionalCssClasses: "bold"
-                 }
-               },
-               {
-                 name: "tutorial/Label",
-                 config: {
-                   additionalCssClasses: "large",
-                   widgets: [
-                     {
-                       name: "alfresco/html/Label",
-                       config: {
-                         label: "<< {label} >>",
-                         additionalCssClasses: "bold {additionalCssClasses}"
-                       }
-                     }
-                   ]
-                 }
-               },
-               {
                  name: "alfresco/buttons/AlfButton",
                  config: {
                    label: "Go to parent folder",
@@ -99,16 +71,95 @@ model.jsonModel = {
                  }
                },
                {
-                 name: "alfresco/documentlibrary/AlfDocumentList",
-                 config: {
-                   rootNode: "alfresco://user/home",
-                   rawData: true,
-                   widgets: [
-                     {
-                       name: "alfresco/documentlibrary/views/AlfSimpleView"
-                     }
-                   ]
-                 }
+                name:"alfresco/layout/HorizontalWidgets",
+                config:{
+                    widgets:[
+                       {
+                         name: "alfresco/documentlibrary/AlfDocumentList",
+                         config: {
+                           rootNode: "alfresco://user/home",
+                           rawData: true,
+                           widgets: [
+                             {
+                               name: "alfresco/lists/views/AlfListView",
+                               config: {
+                                 widgets: [
+                                   {
+                                     name: "alfresco/lists/views/layouts/Row",
+                                     config: {
+                                       widgets: [
+                                         {
+                                           name: "alfresco/lists/views/layouts/Cell",
+                                           config: {
+                                           additionalCssClasses: "mediumpad",
+                                           widgets: [
+                                            {
+                                               name: "alfresco/renderers/PropertyLink",
+                                               config: {
+                                                  propertyToRender: "node.properties.cm:name",
+                                                  publishTopic: "ALF_DOCUMENTLIST_PATH_CHANGED",
+                                                  publishPayloadType: "PROCESS",
+                                                  useCurrentItemAsPayload: false,
+                                                  publishPayloadModifiers: ["processCurrentItemTokens"],
+                                                  publishPayload: {
+                                                     path: "{location.path}/{location.file}"
+                                                  },
+                                                  renderFilter: [
+                                                     {
+                                                        property: "node.isContainer",
+                                                        values: [true]
+                                                     }
+                                                  ]
+                                               }
+                                            },
+                                            {
+                                              name: "alfresco/renderers/PropertyLink",
+                                              config: {
+                                                propertyToRender: "node.properties.cm:name",
+                                                publishTopic: "ALF_RETRIEVE_SINGLE_DOCUMENT_REQUEST_SUCCESS",
+                                                renderFilter: [
+                                                  {
+                                                    property: "node.isContainer",
+                                                    values: [false]
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          ]}
+                                       }]
+                                     }
+                                   }
+                                 ]
+                               }
+                             }
+                           ]
+                         }
+                       },
+                        {
+                          name: "alfresco/documentlibrary/AlfDocument",
+                          config: {
+                            itemProperty: "",
+                            nodeRef: null,
+                            rawData: true,
+                            widgets: [
+                              {
+                                name: "alfresco/preview/AlfDocumentPreview",
+                                config: {
+                                  widgetsForPluginsOverrides: [
+                                    {
+                                      id: "PdfJs",
+                                      replace: true,
+                                      name: "alfresco/preview/PdfJs/PdfJs",
+                                      config: {}
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                    ]
+                }
                }
                // Add more widgets here !!!
             ]
