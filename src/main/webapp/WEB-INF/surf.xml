@@ -122,6 +122,7 @@
     -->
     <config evaluator="string-compare" condition="UriTemplate">
         <uri-templates>
+           <uri-template id="nodeRefPage">/{pageid}/ws/{webscript}/{store_type}/{store_id}/{id}</uri-template>
            <uri-template id="remote-node-page">/{pageid}/p/{pagename}/{store_type}/{store_id}/{id}</uri-template>
            <uri-template id="remote-site-page">/site/{site}/{pageid}/p/{pagename}</uri-template>
            <uri-template id="remote-page">/{pageid}/p/{pagename}</uri-template>

@@ -116,7 +116,15 @@ model.jsonModel = {
                                               name: "alfresco/renderers/PropertyLink",
                                               config: {
                                                 propertyToRender: "node.properties.cm:name",
-                                                publishTopic: "ALF_RETRIEVE_SINGLE_DOCUMENT_REQUEST_SUCCESS",
+                                                publishTopic: "ALF_NAVIGATE_TO_PAGE",
+                                                publishPayloadType: "PROCESS",
+                                                useCurrentItemAsPayload: false,
+                                                publishPayloadModifiers: ["processCurrentItemTokens","convertNodeRefToUrl"],
+                                                publishPayload: {
+                                                   url: "ap/ws/document/{node.nodeRef}",
+                                                   type: "SHARE_PAGE_RELATIVE",
+                                                   target: "CURRENT"
+                                                },
                                                 renderFilter: [
                                                   {
                                                     property: "node.isContainer",
