@@ -223,7 +223,17 @@ model.jsonModel = {
                                                         config: {
                                                             additionalCssClasses: "mediumpad",
                                                             widgets: [{
-                                                                name: "alfresco/renderers/Selector"
+                                                                name: "alfresco/renderers/Selector",
+                                                                config:{
+                                                                    renderFilterMethod: "ALL",
+                                                                    renderFilter: [
+                                                                       {
+                                                                          property: "shortName",
+                                                                          values: ["ALFRESCO_ADMINISTRATORS"],
+                                                                          negate: true
+                                                                       }
+                                                                    ]
+                                                                }
                                                             }]
                                                         }
                                                     }, {
@@ -357,6 +367,14 @@ model.jsonModel = {
                                                             widgets: [{
                                                                 name: "alfresco/renderers/PublishAction",
                                                                 config: {
+                                                                    renderFilterMethod: "ALL",
+                                                                    renderFilter: [
+                                                                       {
+                                                                          property: "shortName",
+                                                                          values: ["ALFRESCO_ADMINISTRATORS"],
+                                                                          negate: true
+                                                                       }
+                                                                    ],
                                                                     iconClass: "delete-16",
                                                                     publishTopic: "ALF_CRUD_DELETE",
                                                                     publishPayloadType: "PROCESS",
@@ -580,6 +598,14 @@ model.jsonModel = {
                                                           {
                                                             name: "alfresco/renderers/PublishAction",
                                                             config: {
+                                                                renderFilterMethod: "ALL",
+                                                                renderFilter: [
+                                                                   {
+                                                                      property: "userName",
+                                                                      values: ["admin"],
+                                                                      negate: true
+                                                                   }
+                                                                ],
                                                               iconClass: "delete-16",
                                                 			  publishTopic : "ALF_CRUD_DELETE",
                                                               publishPayloadType: "PROCESS",

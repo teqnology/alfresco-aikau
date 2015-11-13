@@ -119,3 +119,5 @@ model.jsonModel = {
       }*/
    ]
 };
+
+model.jsonModel.groupMemberships = user.properties["alfUserGroups"];
